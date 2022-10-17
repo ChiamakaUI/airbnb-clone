@@ -1,0 +1,94 @@
+body{
+  overflow-x: hidden;
+  font-family: 'Playfair Display', serif;
+
+}
+
+
+
+.modal {
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+  /* background-color: rgba(0, 0, 0, 0.5); */
+}
+.modal-content {
+  margin: 10% auto;
+  width: 60%;
+  box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 7px 20px 0 rgba(0, 0, 0, 0.17);
+  background-color: #fff;
+
+}
+.activeDot{
+  opacity: 1;
+}
+.notActiveDot{
+  opacity: 0.3;
+}
+.hide{
+  opacity: 0;
+}
+input[type=date]{
+  width: 50%;
+  height: 50px;
+  /* outline: rgb(221, 221, 221); */
+  outline: none;
+  border: 2px solid #ccc;
+  font-family: 'Playfair Display', serif;
+
+}
+
+input, select{
+  font-family: 'Playfair Display', serif;
+}
+button{
+  font-family: 'Playfair Display', serif;
+
+}
+
+.first{
+  border-radius: 20px 0 0 20px;
+  margin-right: 3px;
+  width: 65%;
+  height: 400px;
+}
+.second{
+  border-radius: 0 20px 20px 0;
+  margin-left: 3px;
+  width: 30%;
+  height: 400px;
+}
+
+a{
+  text-decoration: none;
+  color: inherit;
+}
+
+video {
+  object-fit: fill;
+
+}
+
+
+.ParallaxVideo{ 
+  height: 300px;
+  padding-bottom: 50px;
+  padding-top: 50px; 
+}
+.ParallaxVideo video{ 
+  min-width: 100%;
+  position: fixed;
+  top: 15%;
+  z-index: -999;
+}
+.ParallaxVideo h1 {
+color: #fff;
+font-size: 76px;
+font-weight: 700;
+text-align: center;
+text-transform: uppercase;
+}
