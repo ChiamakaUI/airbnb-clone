@@ -6,7 +6,7 @@ import Modal from "./Modal";
 const RoomInfo = ({ description, hostName, hostImage, propertyType }) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <Box sx={{ width: "50%" }}>
+    <Box sx={{ width: {xs: "95%", sm: "95%", md: "90%", lg:"50%"} }}>
       <Stack
         direction="row"
         spacing={1}

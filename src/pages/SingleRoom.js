@@ -10,10 +10,12 @@ import { database } from "../config/firebase";
 import { currentUserContext } from "../App";
 import axios from "axios";
 import LoginForm from "../components/LoginForm";
+import Modal from "../components/Modal";
 
 const SingleRoom = () => {
   const { roomId } = useParams();
   const [room, setRoom] = useState([]);
+  const [showReserveModal, setShowReserveModal] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
@@ -36,15 +38,22 @@ const SingleRoom = () => {
     filterById(roomId);
   }, [roomId]);
 
-  const reserveRoom = (houseName, houseLocation) => {
+  const reserveRoom = (
+    houseName,
+    houseLocation,
+    closeModalFunc,
+    inModal = false
+  ) => {
     if (numberOfDays <= 0) {
       alert("Please, pick the duration of your stay to continue");
       return;
     }
     if (Object.keys(currentUser).length === 0) {
       setModalOpen(true);
+      if (inModal) closeModalFunc(false);
       return;
     }
+
     const options = {
       method: "POST",
       url: "https://email-sender1.p.rapidapi.com/",
@@ -105,6 +114,12 @@ const SingleRoom = () => {
           sx={{
             display: "flex",
             justifyContent: "space-between",
+            flexDirection: {
+              xs: "column",
+              sm: "column",
+              md: "column",
+              lg: "row",
+            },
             width: "88%",
             mx: "auto",
             my: "3%",
@@ -124,6 +139,7 @@ const SingleRoom = () => {
               borderColor: "#ccc",
               borderRadius: "15px",
               boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
+              display: { xs: "none", sm: "none", md: "none", lg: "block" },
             }}
           >
             <Typography variant="h6">{`$${value}`} night</Typography>
@@ -177,8 +193,110 @@ const SingleRoom = () => {
             </Stack>
           </Box>
         </Box>
+        <Box
+          sx={{
+            display: { xs: "flex", sm: "flex", md: "flex", lg: "none" },
+            justifyContent: "space-between",
+            alignItems: "center",
+            width: "80%",
+            mx: "auto",
+          }}
+        >
+          <Typography variant="h6">{`$${value}`} night</Typography>
+          <Button
+            size="small"
+            variant="contained"
+            sx={{
+              backgroundColor: "#FF4466",
+              width: { xs: "40%", sm: "25%", md: "25%" },
+              margin: "2% 0",
+              "&:hover": {
+                backgroundColor: "#FF4466",
+                opacity: [0.9, 0.8, 0.7],
+              },
+            }}
+            onClick={() => setShowReserveModal(true)}
+          >
+            Reserve
+          </Button>
+        </Box>
         {modalOpen && (
           <LoginForm setIsOpen={setModalOpen} shouldNavigate={false} />
+        )}
+        {showReserveModal && (
+          <Modal
+            setIsOpen={setShowReserveModal}
+            modalColor="#f6f6f6"
+            contentWidth="85%"
+          >
+            <Box
+              sx={{
+                border: 1,
+                padding: "30px",
+                borderColor: "#ccc",
+                boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
+              }}
+            >
+              <Typography variant="h6">{`$${value}`} night</Typography>
+              <Stack direction="row" alignItems="center">
+                <input
+                  type="date"
+                  value={startDate.toISOString().split("T")[0]}
+                  onChange={(e) => setStartDate(new Date(e.target.value))}
+                />
+                <input
+                  type="date"
+                  value={endDate.toISOString().split("T")[0]}
+                  onChange={(e) => setEndDate(new Date(e.target.value))}
+                />
+              </Stack>
+              <Guests />
+              <Button
+                size="large"
+                variant="contained"
+                sx={{
+                  backgroundColor: "#FF4466",
+                  width: "100%",
+                  margin: "2% 0",
+                  "&:hover": {
+                    backgroundColor: "#FF4466",
+                    opacity: [0.9, 0.8, 0.7],
+                  },
+                }}
+                onClick={() =>
+                  reserveRoom(
+                    houseName,
+                    houseLocation,
+                    setShowReserveModal,
+                    true
+                  )
+                }
+              >
+                Reserve
+              </Button>
+              <Stack
+                direction="row"
+                alignItems="center"
+                justifyContent="space-between"
+              >
+                <Typography variant="h6">
+                  {`$${value}`} X{" "}
+                  {numberOfDays < 0
+                    ? 0
+                    : numberOfDays === 0
+                    ? 0
+                    : numberOfDays === 1
+                    ? `${numberOfDays} night`
+                    : `${numberOfDays} nights`}
+                </Typography>
+                <Typography variant="h6">
+                  {`$${
+                    parseInt(value) * (numberOfDays < 0 ? 0 : numberOfDays)
+                  }`}
+                </Typography>
+              </Stack>
+            </Box>
+          </Modal>
         )}
       </Box>
     );

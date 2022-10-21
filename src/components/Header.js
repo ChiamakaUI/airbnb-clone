@@ -20,6 +20,7 @@ import { Link } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import { auth } from "../config/firebase";
 
+
 const Header = () => {
   const iconStyles = {
     fontSize: "1.5rem",
@@ -39,6 +40,7 @@ const Header = () => {
   };
 
   const { currentUser, setCurrentUser } = useContext(currentUserContext);
+  
 
   const logout = () => {
     signOut(auth)

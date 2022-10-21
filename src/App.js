@@ -1,6 +1,5 @@
 import "./Styles/App.css";
 import Homes from "./pages/Homes";
-// import { locations } from "./data";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Rooms from "./pages/Rooms";
 import SingleRoom from "./pages/SingleRoom";
@@ -9,6 +8,7 @@ import HostHome from "./pages/HostHome";
 import HostExperience from "./pages/HostExperience";
 import BecomeHost from "./pages/BecomeHost";
 import SignUp from "./pages/SignUp";
+import PageNotFound from "./pages/PageNotFound";
 
 export const currentUserContext = createContext();
 
@@ -39,7 +39,7 @@ function App() {
           </Route>
           <Route path="become-a-host" element={<BecomeHost/>}/>
           <Route path="create-account" element={<SignUp/>}/>
-          
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>
     </currentUserContext.Provider>

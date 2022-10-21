@@ -16,7 +16,7 @@ const Modal = (props) => {
           style={iconStyles}
         />
       </Box>
-      <Box className="modal-content">{props.children}</Box>
+      <Box className="modal-content" sx={{ width: props.contentWidth || "60%"}}>{props.children}</Box>
     </Box>
   );
 };
